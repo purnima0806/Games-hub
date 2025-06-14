@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub</title>
+    <style>
+        /* Basic CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, rgb(24, 45, 202), #0b0f82);
+            padding: 15px 20px;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+        }
+        .navbar h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+        }
+        .navbar ul li {
+            margin-left: 20px;
+        }
+        .navbar ul li a:hover {
+            background-color: #ffffff;
+        }
+
+        /* Search Box Styling */
+        .search-box {
+            position: relative;
+        }
+        .search-box input[type="text"] {
+            padding: 7px 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            width: 220px;
+            outline: none;
+        }
+        .search-box button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border: none;
+            background-color: #357ae8;
+            color: white;
+            padding: 7px 10px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 40px 20px;
+            text-align: center;
+            background-image: url(gaming.jpg);
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            font-size: 32px;
+            color: #ffffff;
+        }
+        .game-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+        .card {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 15px;
+        }
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .card a {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            background-color: #4285f4;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .card a:hover {
+            background-color: #1a73e8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <h1>Game Hub</h1>
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search games...">
+            <button onclick="searchGame()">Search</button>
+        </div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#games">Games</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Explore Our Games</h2>
+        <div class="game-cards" id="games">
+            <!-- Game 1 -->
+            <div class="card">
+                <img src="game1.jpg" alt="Quiz Game">
+                <div class="card-content">
+                    <h3>Quiz Game</h3>
+                    <p>Test your knowledge with our fun and challenging quiz game!</p>
+                    <a href="quiz.html">Play Now</a>
+                </div>
+            </div>
+            <!-- Game 2 -->
+            <div class="card">
+                <img src="game2.avif" alt="Notes Game">
+                <div class="card-content">
+                    <h3>Notes Game</h3>
+                    <p>Take notes and track your progress with this interactive game.</p>
+                    <a href="notes.html">Play Now</a>
+                </div>
+            </div>
+            <!-- Game 3 -->
+            <div class="card">
+                <img src="game3.webp" alt="Puzzle Game">
+                <div class="card-content">
+                    <h3>Puzzle Game</h3>
+                    <p>Challenge yourself with different levels of puzzles.</p>
+                    <a href="PUZZLEHTML.html">Play Now</a>
+                </div>
+            </div>
+            <!-- Game 4 -->
+            <div class="card">
+                <img src="game4.jpg" alt="Memory Game">
+                <div class="card-content">
+                    <h3>tic tac toe Game</h3>
+                    <p>Sharpen your memory with our classic memory card game.</p>
+                    <a href="TICTACTOE.html">Play Now</a>
+                </div>
+            </div>
+            <!-- Game 5 -->
+            <div class="card">
+                <img src="game5.jpeg" alt="Math Challenge">
+                <div class="card-content">
+                    <h3>Math Challenge</h3>
+                    <p>Improve your math skills with quick, timed challenges.</p>
+                    <a href="math.html">Play Now</a>
+                </div>
+            </div>
+            <!-- Game 6 -->
+            <div class="card">
+                <img src="game6.jpg" alt="Typing Speed Test">
+                <div class="card-content">
+                    <h3>Typing Speed Test</h3>
+                    <p>Test and improve your typing speed with fun challenges.</p>
+                    <a href="typing.html">Play Now</a>
+                </div>
+            </div>
+            <!-- Game 7 -->
+            <div class="card">
+                <img src="game7.jpg" alt="Word Search">
+                <div class="card-content">
+                    <h3>Word Search</h3>
+                    <p>Find the hidden words in this classic word search game.</p>
+                    <a href="wordsearch.html">Play Now</a>
+                </div>
+            </div>
+            <!-- Game 8 -->
+            <div class="card">
+                <img src="game8.jpg" alt="Sudoku">
+                <div class="card-content">
+                    <h3>Sudoku</h3>
+                    <p>Test your logic skills with different levels of Sudoku.</p>
+                    <a href="SUDOKU.html">Play Now</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="game9.webp" alt="Snakeladder">
+                <div class="card-content">
+                    <h3>Snake and Ladder</h3>
+                    <p>Test your logic skills with different levels of Sudoku.</p>
+                    <a href="snakeladder.html">Play Now</a>
+                </div>
+            </div><div class="card">
+                <img src="game10.jpg" alt="Snakeladder">
+                <div class="card-content">
+                    <h3>rock paper scissors</h3>
+                    <p>Test your logic skills with different levels of Sudoku.</p>
+                    <a href="rockpaper.html">Play Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Simple search function
+        function searchGame() {
+            const searchInput = document.getElementById("search").value.toLowerCase();
+            const cards = document.querySelectorAll(".card");
+
+            cards.forEach(card => {
+                const gameTitle = card.querySelector("h3").innerText.toLowerCase();
+                if (gameTitle.includes(searchInput)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
