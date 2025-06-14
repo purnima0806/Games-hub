@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 5px;
+            margin: 20px 0;
+        }
+
+        .cell {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .cell.selected {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #357ae8;
+        }
+
+        #message {
+            font-size: 16px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word Search Game</h1>
+        <p>Find the words: <strong id="word-to-find">HELLO, WORLD, JAVA, CODE</strong></p>
+        <div id="grid" class="grid"></div>
+        <p id="message"></p>
+        <button onclick="resetGame()">Reset Game</button>
+    </div>
+
+    <script>
+        const gridSize = 8; // 8x8 grid
+        const wordsToFind = ["HELLO", "WORLD", "JAVA", "CODE"];  // Array of words to find
+        let selectedCells = [];
+        let foundWords = [];
+        let found = false;
+
+        // Create the grid
+        function createGrid() {
+            const gridElement = document.getElementById("grid");
+            gridElement.innerHTML = "";
+            selectedCells = [];
+            foundWords = [];
+            found = false;
+            document.getElementById("message").innerText = "";
+
+            // Create empty grid with random letters
+            for (let i = 0; i < gridSize * gridSize; i++) {
+                const cell = document.createElement("div");
+                cell.classList.add("cell");
+                cell.innerText = getRandomLetter();
+                cell.addEventListener("click", () => selectCell(cell, i));
+                gridElement.appendChild(cell);
+            }
+
+            // Place each word in the grid
+            wordsToFind.forEach(word => placeWordInGrid(word));
+        }
+
+        // Get a random letter for empty cells
+        function getRandomLetter() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return letters[Math.floor(Math.random() * letters.length)];
+        }
+
+        // Place a word in the grid
+        function placeWordInGrid(word) {
+            let placed = false;
+            const gridElement = document.getElementById("grid").children;
+
+            while (!placed) {
+                const startRow = Math.floor(Math.random() * gridSize);
+                const startCol = Math.floor(Math.random() * (gridSize - word.length));
+
+                // Check if the word can be placed horizontally
+                let canPlace = true;
+                for (let i = 0; i < word.length; i++) {
+                    const index = startRow * gridSize + startCol + i;
+                    if (gridElement[index].innerText !== getRandomLetter()) {
+                        canPlace = false;
+                        break;
+                    }
+                }
+
+                if (canPlace) {
+                    for (let i = 0; i < word.length; i++) {
+                        const index = startRow * gridSize + startCol + i;
+                        gridElement[index].innerText = word[i];
+                    }
+                    placed = true;
+                }
+            }
+        }
+
+        // Handle cell selection
+        function selectCell(cell, index) {
+            if (found) return;
+
+            if (!cell.classList.contains("selected")) {
+                cell.classList.add("selected");
+                selectedCells.push({ cell, index });
+            } else {
+                cell.classList.remove("selected");
+                selectedCells = selectedCells.filter(c => c.index !== index);
+            }
+
+            checkSelection();
+        }
+
+        // Check if the selected cells form a word
+        function checkSelection() {
+            const selectedWord = selectedCells.map(c => c.cell.innerText).join("");
+
+            wordsToFind.forEach(word => {
+                if (selectedWord === word && !foundWords.includes(word)) {
+                    document.getElementById("message").innerText = `You found the word: ${word}!`;
+                    foundWords.push(word);
+                    selectedCells.forEach(c => c.cell.classList.add("selected"));
+                }
+            });
+
+            if (foundWords.length === wordsToFind.length) {
+                document.getElementById("message").innerText = "You found all the words!";
+                found = true;
+            }
+        }
+
+        // Reset the game
+        function resetGame() {
+            createGrid();
+        }
+
+        // Initialize the grid on page load
+        window.onload = createGrid;
+    </script>
+</body>
+</html>

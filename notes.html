@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .notes-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .note {
+            width: 200px;
+            padding: 10px;
+            background-color: #fff9c4;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .add-note {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .add-note input {
+            padding: 8px;
+            font-size: 16px;
+            width: 200px;
+        }
+        .add-note button {
+            padding: 8px 12px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .add-note button:hover {
+            background-color: #388e3c;
+        }
+        .note-actions {
+            margin-top: 20px;
+        }
+        .note-actions ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .note-actions li {
+            display: flex;
+            justify-content: space-between;
+            width: 300px;
+            background-color: #f0f0f0;
+            padding: 8px;
+            border-radius: 6px;
+            margin: 5px 0;
+        }
+        .note-actions button {
+            padding: 4px 8px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        .note-actions .edit-btn {
+            background-color: #2196f3;
+            color: white;
+        }
+        .note-actions .delete-btn {
+            background-color: #e57373;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Notes Game</h1>
+    <div class="add-note">
+        <input type="text" id="noteInput" placeholder="Write a new note...">
+        <button onclick="addNote()">Add Note</button>
+    </div>
+    <div class="notes-container" id="notesContainer"></div>
+    <div class="note-actions" id="noteActions">
+        <h2>Note Actions</h2>
+        <ul id="actionsList"></ul>
+    </div>
+
+    <script>
+        let notes = [];
+
+        function renderNotes() {
+            const notesContainer = document.getElementById('notesContainer');
+            const actionsList = document.getElementById('actionsList');
+            notesContainer.innerHTML = ''; // Clear the note boxes
+            actionsList.innerHTML = ''; // Clear the action list
+
+            notes.forEach((note, index) => {
+                // Display note in notes container
+                const noteElement = document.createElement('div');
+                noteElement.classList.add('note');
+                noteElement.innerText = note;
+                notesContainer.appendChild(noteElement);
+
+                // Add note to actions list with Edit/Delete buttons
+                const actionItem = document.createElement('li');
+                actionItem.innerHTML = `
+                    <span>${note}</span>
+                    <div>
+                        <button class="edit-btn" onclick="editNote(${index})">Edit</button>
+                        <button class="delete-btn" onclick="deleteNote(${index})">Delete</button>
+                    </div>
+                `;
+                actionsList.appendChild(actionItem);
+            });
+        }
+
+        function addNote() {
+            const noteInput = document.getElementById('noteInput');
+            const noteText = noteInput.value.trim();
+            
+            if (noteText) {
+                notes.push(noteText);
+                noteInput.value = ''; // Clear input
+                renderNotes();
+            } else {
+                alert("Please enter some text for the note.");
+            }
+        }
+
+        function editNote(index) {
+            const newText = prompt("Edit your note:", notes[index]);
+            if (newText !== null) { // If Cancel is not clicked
+                notes[index] = newText.trim() || notes[index]; // Keep old text if new one is empty
+                renderNotes();
+            }
+        }
+
+        function deleteNote(index) {
+            if (confirm("Are you sure you want to delete this note?")) {
+                notes.splice(index, 1); // Remove note from array
+                renderNotes();
+            }
+        }
+
+        // Initial render
+        renderNotes();
+    </script>
+</body>
+</html>

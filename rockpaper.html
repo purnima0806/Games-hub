@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .game-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .choices button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: none;
+        }
+        .result, .score {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .result {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock, Paper, Scissors</h1>
+    <div class="game-container">
+        <div class="choices">
+            <button onclick="playRound('rock')">✊ Rock</button>
+            <button onclick="playRound('paper')">✋ Paper</button>
+            <button onclick="playRound('scissors')">✌️ Scissors</button>
+        </div>
+        <div class="score">
+            <p>Best of: <input type="number" id="rounds" value="3" min="1" style="width: 50px;"> rounds</p>
+            <p>Player Score: <span id="playerScore">0</span></p>
+            <p>Computer Score: <span id="computerScore">0</span></p>
+        </div>
+        <div class="result" id="result">Make your move!</div>
+    </div>
+
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function playRound(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            const rounds = parseInt(document.getElementById('rounds').value, 10);
+            let resultText;
+
+            // Determine the result of the round
+            if (playerChoice === computerChoice) {
+                resultText = `It's a draw! Both chose ${playerChoice}.`;
+            } else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper') ||
+                (playerChoice === 'paper' && computerChoice === 'rock')
+            ) {
+                playerScore++;
+                resultText = `You win this round! ${playerChoice} beats ${computerChoice}.`;
+            } else {
+                computerScore++;
+                resultText = `You lose this round! ${computerChoice} beats ${playerChoice}.`;
+            }
+
+            // Update scores and check if the game is over
+            document.getElementById('playerScore').innerText = playerScore;
+            document.getElementById('computerScore').innerText = computerScore;
+            document.getElementById('result').innerText = resultText;
+
+            // Check for the "Best of X" winner
+            if (playerScore >= rounds || computerScore >= rounds) {
+                if (playerScore > computerScore) {
+                    alert("Congratulations! You won the game 🎉");
+                } else {
+                    alert("Game Over! The computer won this time.");
+                }
+                resetGame();
+            }
+        }
+
+        function resetGame() {
+            playerScore = 0;
+            computerScore = 0;
+            document.getElementById('playerScore').innerText = playerScore;
+            document.getElementById('computerScore').innerText = computerScore;
+            document.getElementById('result').innerText = "Make your move!";
+        }
+    </script>
+</body>
+</html>
