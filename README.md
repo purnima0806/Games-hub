@@ -19,7 +19,7 @@ I wanted a fun way to practice frontend basics and work on organizing content ac
 
 I’m planning to add my own custom games in the future and maybe add a basic score tracking system.
 
-## 🧾 How to Try It
+##  How to Try It
 
 Just open `index.html` in your browser and explore the games from the homepage.
 
